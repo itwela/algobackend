@@ -1,17 +1,16 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const fetch = require('node-fetch');
-const { WebSocket, WebSocketServer } = require('ws');
-const cors = require('cors');
-
-const path = require('path');
+import express from 'express';
+import bodyParser from 'body-parser';
+import fetch from 'node-fetch';
+import { WebSocket, WebSocketServer } from 'ws';
+import cors from 'cors';
+import path from 'path'; // You can use path module as an ES6 import
 
 const app = express();
 
-// Calculate the directory based on the entry file's location
-const __dirname = path.resolve();
+// Use import.meta.url to get the directory of the current module
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(path.join(__dirname, 'public'));
 // Enable CORS for all routes
 app.use(cors({
   origin: ['http://localhost:5173', 'https://sfx-kappa.vercel.app']
@@ -24,7 +23,7 @@ const server = app.listen(3000, () => {
 });
 
 // Set up WebSocket server
-const wss = new WebSocketServer({ server }); // Use WebSocket.Server from the 'ws' package
+const wss = new WebSocketServer({ server });
 
 // WebSocket server logic
 wss.on('connection', (ws) => {
@@ -41,7 +40,7 @@ app.post('/bot-messages', (req, res) => {
   messages.push(newMessage);
 
   // Log the received message
-  console.log(`${timestamp}: \nReceived message from ${author}: ${content}`);
+  console.log(`${timestamp}:\nReceived message from ${author}: ${content}`);
 
   // Send the new message to all connected WebSocket clients
   wss.clients.forEach((client) => {
