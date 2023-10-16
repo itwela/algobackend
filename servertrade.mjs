@@ -1,16 +1,20 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import fetch from 'node-fetch';
-import { WebSocket, WebSocketServer } from 'ws'; // Import the WebSocket library
-import cors from 'cors'; // Import the cors package
+const express = require('express');
+const bodyParser = require('body-parser');
+const fetch = require('node-fetch');
+const { WebSocket, WebSocketServer } = require('ws');
+const cors = require('cors');
+
+const path = require('path');
 
 const app = express();
+
+// Calculate the directory based on the entry file's location
+const __dirname = path.resolve();
 
 app.use(express.static(__dirname + '/public'));
 // Enable CORS for all routes
 app.use(cors({
-  origin: ['http://localhost:5173', 
-  'https://sfx-kappa.vercel.app']
+  origin: ['http://localhost:5173', 'https://sfx-kappa.vercel.app']
 }));
 
 const messages = [];
@@ -52,6 +56,3 @@ app.post('/bot-messages', (req, res) => {
 app.get('/bot-messages', (req, res) => {
   res.json(messages);
 });
-
-// npm 
-// npm install express body-parser node-fetch ws cors discord.js
