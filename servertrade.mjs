@@ -6,8 +6,7 @@ import cors from 'cors'; // Import the cors package
 
 const app = express();
 
-app.use(bodyParser.json());
-
+app.use(express.static(__dirname + '/public'));
 // Enable CORS for all routes
 app.use(cors({
   origin: ['http://localhost:5173', 
